@@ -1,10 +1,11 @@
 const CACHE_NAME = 'dryfruits-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png'
+  '/shop-software/',
+  '/shop-software/index.html',
+  '/shop-software/manifest.json',
+  '/shop-software/icon-192.png',
+  '/shop-software/icon-512.png'
+  // Add your CSS, JS, and image files here too
 ];
 
 self.addEventListener('install', (event) => {

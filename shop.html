@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kabul Dry Fruits - Shop Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #8B4513;
+            --secondary: #D2B48C;
+            --accent: #CD853F;
+            --light: #F5DEB3;
+            --dark: #654321;
+            --success: #4CAF50;
+            --danger: #F44336;
+            --info: #2196F3;
+            --afghan-blue: #0066b3;
+            --afghan-red: #ce1126;
+            --afghan-green: #008000;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background: linear-gradient(135deg, #fdf8f2, #f9f1e6);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f9f1e6" opacity="0.5"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23d2b48c" stroke-width="0.5" opacity="0.3"/></svg>');
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--afghan-blue), var(--afghan-green));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--afghan-red);
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--secondary);
+        }
+
+        .panel:hover {
+            transform: translateY(-5px);
+        }
+
+        .panel-title {
+            color: var(--afghan-blue);
+            border-bottom: 2px solid var(--afghan-green);
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-title i {
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            background: #fffdf9;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--afghan-green);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 128, 0, 0.2);
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--afghan-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #004d8a;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--afghan-green);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #006600;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--afghan-red);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #a00d1e;
+            transform: translateY(-2px);
+        }
+
+        .btn-info {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #b5651d;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: #FF9800;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e68a00;
+            transform: translateY(-2px);
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: var(--light);
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: rgba(210, 180, 140, 0.1);
+        }
+
+        .actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .result-box {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            text-align: center;
+            border: 2px dashed var(--accent);
+        }
+
+        .result-title {
+            font-size: 1.3rem;
+            color: var(--afghan-blue);
+            margin-bottom: 1rem;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 10px 0;
+        }
+
+        .gram-conversion {
+            font-size: 1.2rem;
+            background: var(--secondary);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--dark);
+        }
+
+        .unit-badge {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: var(--afghan-blue);
+            border-bottom: 3px solid var(--afghan-blue);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .help-note {
+            background: #e8f4ff;
+            border-left: 4px solid var(--afghan-blue);
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .cart-container {
+            margin-top: 2rem;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .cart-table th {
+            background: var(--light);
+        }
+        
+        .cart-table td, .cart-table th {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        
+        .cart-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .cart-table tr:hover {
+            background-color: rgba(210, 180, 140, 0.1);
+        }
+        
+        .cart-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .total-row {
+            font-weight: bold;
+            font-size: 1.1rem;
+            background-color: var(--light) !important;
+        }
+        
+        .bill-summary {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            border: 2px dashed var(--accent);
+        }
+        
+        .bill-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .bill-total {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: var(--afghan-blue);
+            margin-top: 10px;
+        }
+        
+        .add-to-cart-btn {
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .cart-actions {
+                flex-direction: column;
+            }
+        }
+        
+        .afghan-pattern {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .pattern-1 {
+            top: 20px;
+            left: 20px;
+            background: radial-gradient(circle, var(--afghan-blue) 0%, transparent 70%);
+        }
+        
+        .pattern-2 {
+            bottom: 20px;
+            right: 20px;
+            background: radial-gradient(circle, var(--afghan-green) 0%, transparent 70%);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--afghan-red);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            color: var(--afghan-blue);
+            font-size: 0.9rem;
+        }
+        
+        /* History Section */
+        .history-section {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .history-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .date-filter {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .history-table th {
+            background: var(--light);
+        }
+        
+        .history-table td, .history-table th {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        
+        .history-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .history-table tr:hover {
+            background-color: rgba(210, 180, 140, 0.1);
+        }
+        
+        .history-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .view-bill-btn, .delete-bill-btn {
+            background: var(--afghan-blue);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .delete-bill-btn {
+            background: var(--afghan-red);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--afghan-red);
+        }
+        
+        .modal-bill-content {
+            padding: 20px;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .section-switcher {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .section-btn {
+            padding: 10px 15px;
+            background: var(--light);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .section-btn.active {
+            background: var(--afghan-blue);
+            color: white;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .history-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="afghan-pattern pattern-1"></div>
+    <div class="afghan-pattern pattern-2"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-seedling logo-icon"></i>
+                <h1>Kabul Dry Fruits</h1>
+                <i class="fas fa-seedling logo-icon"></i>
+            </div>
+            <p class="subtitle">Premium Quality Dry Fruits</p>
+        </header>
+
+        <div class="section-title">
+            <h2><i class="fas fa-store"></i> Shop Management System</h2>
+            <div class="section-switcher">
+                <button class="section-btn active" data-section="shop">Shop Management</button>
+                <button class="section-btn" data-section="history">Bill History</button>
+            </div>
+        </div>
+
+        <div id="shopSection" class="content-wrapper">
+            <!-- Left Panel - Inventory Management -->
+            <div class="panel">
+                <h2 class="panel-title"><i class="fas fa-box-open"></i> Product Inventory</h2>
+                
+                <form id="itemForm">
+                    <div class="form-group">
+                        <label for="itemName">Item Name</label>
+                        <input type="text" id="itemName" placeholder="e.g. Almonds, Cashews, Raisins" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="itemPrice">Price (₹)</label>
+                        <input type="number" id="itemPrice" placeholder="Price per kg or piece" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="itemUnit">Pricing Unit</label>
+                        <select id="itemUnit" required>
+                            <option value="kg">Per Kilogram (kg)</option>
+                            <option value="piece">Per Piece</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="hidden" id="editIndex" value="-1">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Product
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="help-note">
+                    <i class="fas fa-info-circle"></i> Add your dry fruits inventory with prices. Prices can be per kg or per piece.
+                </div>
+                
+                <h3 style="margin-top: 2rem; color: var(--afghan-blue);">Current Products</h3>
+                <table id="inventoryTable">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th>Unit</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryList">
+                        <!-- Inventory items will be loaded here -->
+                    </tbody>
+                </table>
+                
+                <div id="emptyInventory" class="empty-state">
+                    <i class="fas fa-box"></i>
+                    <h3>No products in inventory</h3>
+                    <p>Add products using the form above</p>
+                </div>
+            </div>
+            
+            <!-- Right Panel - Order Management -->
+            <div class="panel">
+                <h2 class="panel-title"><i class="fas fa-calculator"></i> Order Calculator</h2>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="kg">By Weight (kg)</div>
+                    <div class="tab" data-tab="piece">By Pieces</div>
+                    <div class="tab" data-tab="rupees">By Amount (₹)</div>
+                </div>
+                
+                <div class="conversion-example">
+                    <h4><i class="fas fa-lightbulb"></i> Quick Order Guide:</h4>
+                    <p><strong>By Weight:</strong> Enter kg quantity → Get price</p>
+                    <p><strong>By Pieces:</strong> Enter piece count → Get price</p>
+                    <p><strong>By Amount:</strong> Enter rupees → Get quantity in kg/grams</p>
+                </div>
+                
+                <div class="tab-content active" id="kgContent">
+                    <div class="form-group">
+                        <label for="itemSelectKg">Select Product</label>
+                        <select id="itemSelectKg" required>
+                            <option value="">-- Select a product --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="kgQuantity">Quantity (kg)</label>
+                        <input type="number" id="kgQuantity" placeholder="Enter quantity in kg" min="0.01" step="0.01" required>
+                    </div>
+                    
+                    <button id="calculateKg" class="btn btn-success">
+                        <i class="fas fa-calculator"></i> Calculate Price
+                    </button>
+                    
+                    <button id="addToCartKg" class="btn btn-info add-to-cart-btn">
+                        <i class="fas fa-cart-plus"></i> Add to Bill
+                    </button>
+                </div>
+                
+                <div class="tab-content" id="pieceContent">
+                    <div class="form-group">
+                        <label for="itemSelectPiece">Select Product</label>
+                        <select id="itemSelectPiece" required>
+                            <option value="">-- Select a product --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pieceQuantity">Number of Pieces</label>
+                        <input type="number" id="pieceQuantity" placeholder="Enter number of pieces" min="1" step="1" required>
+                    </div>
+                    
+                    <button id="calculatePiece" class="btn btn-success">
+                        <i class="fas fa-calculator"></i> Calculate Price
+                    </button>
+                    
+                    <button id="addToCartPiece" class="btn btn-info add-to-cart-btn">
+                        <i class="fas fa-cart-plus"></i> Add to Bill
+                    </button>
+                </div>
+                
+                <div class="tab-content" id="rupeesContent">
+                    <div class="form-group">
+                        <label for="itemSelectRupees">Select Product</label>
+                        <select id="itemSelectRupees" required>
+                            <option value="">-- Select a product --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rupeesAmount">Amount (₹)</label>
+                        <input type="number" id="rupeesAmount" placeholder="Enter amount in rupees" min="1" step="1" required>
+                    </div>
+                    
+                    <button id="calculateRupees" class="btn btn-success">
+                        <i class="fas fa-calculator"></i> Calculate Quantity
+                    </button>
+                    
+                    <button id="addToCartRupees" class="btn btn-info add-to-cart-btn">
+                        <i class="fas fa-cart-plus"></i> Add to Bill
+                    </button>
+                </div>
+                
+                <div class="result-box">
+                    <div class="result-title">Order Calculation</div>
+                    <div id="resultText">Select a product and calculation method</div>
+                    <div id="resultValue" class="result-value">-</div>
+                    <div id="gramConversion" class="gram-conversion">-</div>
+                </div>
+                
+                <!-- Shopping Cart Section -->
+                <div class="cart-container">
+                    <div class="cart-header">
+                        <h3 class="panel-title"><i class="fas fa-shopping-cart"></i> Customer Bill</h3>
+                    </div>
+                    
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Unit Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartItems">
+                            <!-- Cart items will appear here -->
+                        </tbody>
+                    </table>
+                    
+                    <div id="emptyCart" class="empty-state">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Your bill is empty</h3>
+                        <p>Add items to create a customer bill</p>
+                    </div>
+                    
+                    <div class="bill-summary">
+                        <div class="bill-row bill-total">
+                            <span>Grand Total:</span>
+                            <span id="grandTotal">₹0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="cart-actions">
+                        <button id="clearCart" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Clear Bill
+                        </button>
+                        <button id="saveBill" class="btn btn-warning">
+                            <i class="fas fa-save"></i> Save Bill
+                        </button>
+                        <button id="printBill" class="btn btn-success">
+                            <i class="fas fa-receipt"></i> Print Bill
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bill History Section -->
+        <div id="historySection" class="history-section">
+            <div class="panel">
+                <div class="history-header">
+                    <h2 class="panel-title"><i class="fas fa-history"></i> Bill Records</h2>
+                    <button id="clearHistory" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Clear All History
+                    </button>
+                </div>
+                
+                <div class="history-controls">
+                    <button id="todayBtn" class="btn btn-primary">
+                        <i class="fas fa-calendar-day"></i> Today's Bills
+                    </button>
+                    <button id="monthBtn" class="btn btn-success">
+                        <i class="fas fa-calendar-alt"></i> This Month
+                    </button>
+                    <button id="allBtn" class="btn btn-info">
+                        <i class="fas fa-list"></i> All Bills
+                    </button>
+                    <div class="date-filter">
+                        <input type="text" id="startDate" class="date-input" placeholder="Start Date">
+                        <span>to</span>
+                        <input type="text" id="endDate" class="date-input" placeholder="End Date">
+                        <button id="filterBtn" class="btn btn-warning">
+                            <i class="fas fa-filter"></i> Filter
+                        </button>
+                    </div>
+                </div>
+                
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Bill ID</th>
+                            <th>Date & Time</th>
+                            <th>Items</th>
+                            <th>Total Amount</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyList">
+                        <!-- Bill history will appear here -->
+                    </tbody>
+                </table>
+                
+                <div id="emptyHistory" class="empty-state">
+                    <i class="fas fa-history"></i>
+                    <h3>No bill records found</h3>
+                    <p>Save bills to see them appear here</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Kabul Dry Fruits Management System | Premium Quality Dry Fruits</p>
+        </div>
+    </div>
+    
+    <!-- Bill Detail Modal -->
+    <div id="billModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-bill-content" id="modalBillContent">
+                <!-- Bill content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Initialize date pickers
+        flatpickr("#startDate", {
+            dateFormat: "Y-m-d",
+            allowInput: true
+        });
+        
+        flatpickr("#endDate", {
+            dateFormat: "Y-m-d",
+            allowInput: true
+        });
+        
+        // Sample initial inventory for Kabul Dry Fruits
+        let inventory = JSON.parse(localStorage.getItem('dryFruitInventory')) || [
+            { name: "Premium Almonds", price: 2800, unit: "kg" },
+            { name: "Golden Cashews", price: 850, unit: "kg" },
+            { name: "Black Raisins", price: 350, unit: "kg" },
+            { name: "Kashmiri Walnuts", price: 1250, unit: "kg" },
+            { name: "Iranian Pistachios", price: 1600, unit: "kg" },
+            { name: "Medjool Dates", price: 20, unit: "piece" },
+            { name: "Dried Apricots", price: 650, unit: "kg" },
+            { name: "Dried Figs", price: 950, unit: "kg" }
+        ];
+
+        // Shopping cart
+        let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+        
+        // Bill history
+        let billHistory = JSON.parse(localStorage.getItem('billHistory')) || [];
+        
+        // Current calculation
+        let currentCalculation = null;
+
+        // DOM Elements
+        const itemForm = document.getElementById('itemForm');
+        const inventoryList = document.getElementById('inventoryList');
+        const inventoryTable = document.getElementById('inventoryTable');
+        const emptyInventory = document.getElementById('emptyInventory');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const itemSelectKg = document.getElementById('itemSelectKg');
+        const itemSelectPiece = document.getElementById('itemSelectPiece');
+        const itemSelectRupees = document.getElementById('itemSelectRupees');
+        const resultText = document.getElementById('resultText');
+        const resultValue = document.getElementById('resultValue');
+        const gramConversion = document.getElementById('gramConversion');
+        const cartItems = document.getElementById('cartItems');
+        const emptyCart = document.getElementById('emptyCart');
+        const grandTotalEl = document.getElementById('grandTotal');
+        const clearCartBtn = document.getElementById('clearCart');
+        const printBillBtn = document.getElementById('printBill');
+        const saveBillBtn = document.getElementById('saveBill');
+        
+        // History elements
+        const historySection = document.getElementById('historySection');
+        const shopSection = document.getElementById('shopSection');
+        const historyList = document.getElementById('historyList');
+        const emptyHistory = document.getElementById('emptyHistory');
+        const todayBtn = document.getElementById('todayBtn');
+        const monthBtn = document.getElementById('monthBtn');
+        const allBtn = document.getElementById('allBtn');
+        const filterBtn = document.getElementById('filterBtn');
+        const startDate = document.getElementById('startDate');
+        const endDate = document.getElementById('endDate');
+        const clearHistoryBtn = document.getElementById('clearHistory');
+        
+        // Modal elements
+        const billModal = document.getElementById('billModal');
+        const modalBillContent = document.getElementById('modalBillContent');
+        const closeModal = document.querySelector('.close-modal');
+        
+        // Section switcher
+        const sectionBtns = document.querySelectorAll('.section-btn');
+        
+        // Add to cart buttons
+        const addToCartKg = document.getElementById('addToCartKg');
+        const addToCartPiece = document.getElementById('addToCartPiece');
+        const addToCartRupees = document.getElementById('addToCartRupees');
+
+        // Initialize the application
+        function initApp() {
+            renderInventory();
+            updateItemSelects();
+            checkEmptyState();
+            renderCart();
+            renderBillHistory();
+            
+            // Event Listeners
+            itemForm.addEventListener('submit', handleItemFormSubmit);
+            document.getElementById('calculateKg').addEventListener('click', calculateByKg);
+            document.getElementById('calculatePiece').addEventListener('click', calculateByPiece);
+            document.getElementById('calculateRupees').addEventListener('click', calculateByRupees);
+            clearCartBtn.addEventListener('click', clearCart);
+            printBillBtn.addEventListener('click', printBill);
+            saveBillBtn.addEventListener('click', saveBill);
+            
+            // History filter buttons
+            todayBtn.addEventListener('click', () => filterBills('today'));
+            monthBtn.addEventListener('click', () => filterBills('month'));
+            allBtn.addEventListener('click', () => filterBills('all'));
+            filterBtn.addEventListener('click', () => filterBills('custom'));
+            clearHistoryBtn.addEventListener('click', clearAllHistory);
+            
+            // Modal close
+            closeModal.addEventListener('click', () => {
+                billModal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === billModal) {
+                    billModal.style.display = 'none';
+                }
+            });
+            
+            // Section switcher
+            sectionBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const section = btn.dataset.section;
+                    
+                    // Update active button
+                    sectionBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Show correct section
+                    if (section === 'shop') {
+                        shopSection.style.display = 'grid';
+                        historySection.style.display = 'none';
+                    } else {
+                        shopSection.style.display = 'none';
+                        historySection.style.display = 'block';
+                        renderBillHistory();
+                    }
+                });
+            });
+            
+            // Add to cart listeners
+            addToCartKg.addEventListener('click', addToCart);
+            addToCartPiece.addEventListener('click', addToCart);
+            addToCartRupees.addEventListener('click', addToCart);
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    document.getElementById(`${tab.dataset.tab}Content`).classList.add('active');
+                    
+                    // Clear results when switching tabs
+                    clearResults();
+                });
+            });
+        }
+
+        // Clear results display
+        function clearResults() {
+            resultText.innerHTML = "Select a product and calculation method";
+            resultValue.innerHTML = "-";
+            gramConversion.innerHTML = "-";
+            currentCalculation = null;
+        }
+
+        // Render inventory table
+        function renderInventory() {
+            inventoryList.innerHTML = '';
+            
+            inventory.forEach((item, index) => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>₹${item.price.toFixed(2)}</td>
+                    <td><span class="unit-badge">${item.unit === 'kg' ? 'Per kg' : 'Per piece'}</span></td>
+                    <td class="actions">
+                        <button class="btn btn-primary btn-sm edit-btn" data-index="${index}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm delete-btn" data-index="${index}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                inventoryList.appendChild(row);
+            });
+            
+            // Add event listeners to edit and delete buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', () => editItem(parseInt(btn.dataset.index)));
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', () => deleteItem(parseInt(btn.dataset.index)));
+            });
+            
+            checkEmptyState();
+        }
+
+        // Check if inventory is empty
+        function checkEmptyState() {
+            if (inventory.length === 0) {
+                inventoryTable.style.display = 'none';
+                emptyInventory.style.display = 'block';
+            } else {
+                inventoryTable.style.display = 'table';
+                emptyInventory.style.display = 'none';
+            }
+        }
+
+        // Update item selects in calculator
+        function updateItemSelects() {
+            // Clear existing options
+            [itemSelectKg, itemSelectPiece, itemSelectRupees].forEach(select => {
+                select.innerHTML = '<option value="">-- Select a product --</option>';
+            });
+            
+            // Add items to selects
+            inventory.forEach(item => {
+                const option = document.createElement('option');
+                option.value = inventory.indexOf(item);
+                option.textContent = `${item.name} (₹${item.price}/${item.unit === 'kg' ? 'kg' : 'pc'})`;
+                
+                // Add to all selects
+                itemSelectKg.appendChild(option.cloneNode(true));
+                itemSelectPiece.appendChild(option.cloneNode(true));
+                itemSelectRupees.appendChild(option);
+            });
+        }
+
+        // Handle item form submission
+        function handleItemFormSubmit(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('itemName').value;
+            const price = parseFloat(document.getElementById('itemPrice').value);
+            const unit = document.getElementById('itemUnit').value;
+            const editIndex = parseInt(document.getElementById('editIndex').value);
+            
+            if (editIndex >= 0) {
+                // Edit existing item
+                inventory[editIndex] = { name, price, unit };
+            } else {
+                // Add new item
+                inventory.push({ name, price, unit });
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('dryFruitInventory', JSON.stringify(inventory));
+            
+            // Reset form and update UI
+            itemForm.reset();
+            document.getElementById('editIndex').value = '-1';
+            renderInventory();
+            updateItemSelects();
+        }
+
+        // Edit item
+        function editItem(index) {
+            const item = inventory[index];
+            
+            document.getElementById('itemName').value = item.name;
+            document.getElementById('itemPrice').value = item.price;
+            document.getElementById('itemUnit').value = item.unit;
+            document.getElementById('editIndex').value = index;
+            
+            // Scroll to form
+            document.getElementById('itemForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Delete item
+        function deleteItem(index) {
+            if (confirm('Are you sure you want to delete this item?')) {
+                inventory.splice(index, 1);
+                localStorage.setItem('dryFruitInventory', JSON.stringify(inventory));
+                renderInventory();
+                updateItemSelects();
+            }
+        }
+
+        // Calculate by kg
+        function calculateByKg() {
+            const index = parseInt(itemSelectKg.value);
+            const quantity = parseFloat(document.getElementById('kgQuantity').value);
+            
+            if (isNaN(index) || isNaN(quantity) || quantity <= 0) {
+                alert('Please select a product and enter a valid quantity');
+                return false;
+            }
+            
+            const item = inventory[index];
+            
+            if (item.unit !== 'kg') {
+                alert('This product is not sold by weight. Please use the "By Pieces" tab.');
+                return false;
+            }
+            
+            const total = item.price * quantity;
+            const grams = quantity * 1000;
+            
+            resultText.innerHTML = `Order for <strong>${item.name}</strong>`;
+            resultValue.innerHTML = `₹${total.toFixed(2)}`;
+            gramConversion.innerHTML = `Quantity: ${quantity.toFixed(3)} kg (${grams.toFixed(0)} grams)`;
+            
+            // Store current calculation
+            currentCalculation = {
+                item: item,
+                quantity: quantity,
+                total: total,
+                unit: 'kg',
+                type: 'weight'
+            };
+            
+            return true;
+        }
+
+        // Calculate by pieces
+        function calculateByPiece() {
+            const index = parseInt(itemSelectPiece.value);
+            const quantity = parseInt(document.getElementById('pieceQuantity').value);
+            
+            if (isNaN(index) || isNaN(quantity) || quantity <= 0) {
+                alert('Please select a product and enter a valid quantity');
+                return false;
+            }
+            
+            const item = inventory[index];
+            
+            if (item.unit !== 'piece') {
+                alert('This product is not sold by pieces. Please use the "By Weight" tab.');
+                return false;
+            }
+            
+            const total = item.price * quantity;
+            
+            resultText.innerHTML = `Order for <strong>${item.name}</strong>`;
+            resultValue.innerHTML = `₹${total.toFixed(2)}`;
+            gramConversion.innerHTML = `Quantity: ${quantity} pieces`;
+            
+            // Store current calculation
+            currentCalculation = {
+                item: item,
+                quantity: quantity,
+                total: total,
+                unit: 'piece',
+                type: 'pieces'
+            };
+            
+            return true;
+        }
+
+        // Calculate by rupees - shows both kg and grams
+        function calculateByRupees() {
+            const index = parseInt(itemSelectRupees.value);
+            const amount = parseFloat(document.getElementById('rupeesAmount').value);
+            
+            if (isNaN(index) || isNaN(amount) || amount <= 0) {
+                alert('Please select a product and enter a valid amount');
+                return false;
+            }
+            
+            const item = inventory[index];
+            let total = amount;
+            
+            if (item.unit === 'kg') {
+                const kg = amount / item.price;
+                const grams = kg * 1000;
+                
+                resultText.innerHTML = `For ₹${amount}, you get:`;
+                resultValue.innerHTML = `${kg.toFixed(3)} kg`;
+                gramConversion.innerHTML = `Which is ${grams.toFixed(0)} grams of ${item.name}`;
+                
+                // Store current calculation
+                currentCalculation = {
+                    item: item,
+                    quantity: kg,
+                    total: total,
+                    unit: 'kg',
+                    type: 'amount'
+                };
+            } else {
+                const pieces = amount / item.price;
+                
+                resultText.innerHTML = `For ₹${amount}, you get:`;
+                resultValue.innerHTML = `${pieces.toFixed(2)} pieces`;
+                gramConversion.innerHTML = `of ${item.name}`;
+                
+                // Store current calculation
+                currentCalculation = {
+                    item: item,
+                    quantity: pieces,
+                    total: total,
+                    unit: 'piece',
+                    type: 'amount'
+                };
+            }
+            
+            return true;
+        }
+
+        // Add current item to cart
+        function addToCart() {
+            // First calculate to ensure we have current values
+            let success = false;
+            
+            if (document.querySelector('.tab.active').dataset.tab === 'kg') {
+                success = calculateByKg();
+            } else if (document.querySelector('.tab.active').dataset.tab === 'piece') {
+                success = calculateByPiece();
+            } else if (document.querySelector('.tab.active').dataset.tab === 'rupees') {
+                success = calculateByRupees();
+            }
+            
+            if (!success || !currentCalculation) {
+                alert('Please calculate the item first');
+                return;
+            }
+            
+            // Add to cart
+            cart.push({
+                id: Date.now(), // unique ID for each cart item
+                name: currentCalculation.item.name,
+                unitPrice: currentCalculation.item.price,
+                quantity: currentCalculation.quantity,
+                total: currentCalculation.total,
+                unit: currentCalculation.unit,
+                type: currentCalculation.type
+            });
+            
+            // Save cart to localStorage
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+            
+            // Render cart
+            renderCart();
+            
+            // Reset form
+            if (document.querySelector('.tab.active').dataset.tab === 'kg') {
+                document.getElementById('kgQuantity').value = '';
+            } else if (document.querySelector('.tab.active').dataset.tab === 'piece') {
+                document.getElementById('pieceQuantity').value = '';
+            } else if (document.querySelector('.tab.active').dataset.tab === 'rupees') {
+                document.getElementById('rupeesAmount').value = '';
+            }
+            
+            alert('Item added to bill!');
+        }
+
+        // Render shopping cart
+        function renderCart() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                emptyCart.style.display = 'block';
+                cartItems.style.display = 'none';
+                grandTotalEl.textContent = '₹0.00';
+            } else {
+                emptyCart.style.display = 'none';
+                cartItems.style.display = 'table-row-group';
+                
+                cart.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    
+                    let quantityDisplay = '';
+                    if (item.unit === 'kg') {
+                        quantityDisplay = `${item.quantity.toFixed(3)} kg`;
+                    } else {
+                        quantityDisplay = `${item.quantity} pieces`;
+                    }
+                    
+                    row.innerHTML = `
+                        <td>${item.name}</td>
+                        <td>₹${item.unitPrice.toFixed(2)}/${item.unit === 'kg' ? 'kg' : 'pc'}</td>
+                        <td>${quantityDisplay}</td>
+                        <td>₹${item.total.toFixed(2)}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm remove-btn" data-index="${index}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    
+                    cartItems.appendChild(row);
+                });
+                
+                // Add event listeners to remove buttons
+                document.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.index)));
+                });
+                
+                // Calculate grand total
+                const grandTotal = cart.reduce((sum, item) => sum + item.total, 0);
+                
+                // Update bill summary
+                grandTotalEl.textContent = `₹${grandTotal.toFixed(2)}`;
+            }
+        }
+
+        // Remove item from cart
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        // Clear the entire cart
+        function clearCart() {
+            if (confirm('Are you sure you want to clear the entire bill?')) {
+                cart = [];
+                localStorage.setItem('shoppingCart', JSON.stringify(cart));
+                renderCart();
+            }
+        }
+
+        // Print bill
+        function printBill() {
+            if (cart.length === 0) {
+                alert('Your bill is empty. Add items before printing.');
+                return;
+            }
+            
+            // Generate a printable bill
+            generatePrintableBill();
+        }
+        
+        // Save bill to history
+        function saveBill() {
+            if (cart.length === 0) {
+                alert('Your bill is empty. Add items before saving.');
+                return;
+            }
+            
+            // Calculate grand total
+            const grandTotal = cart.reduce((sum, item) => sum + item.total, 0);
+            
+            // Create bill object
+            const bill = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                items: [...cart],
+                total: grandTotal
+            };
+            
+            // Add to bill history
+            billHistory.unshift(bill);
+            
+            // Save to localStorage
+            localStorage.setItem('billHistory', JSON.stringify(billHistory));
+            
+            // Clear cart
+            cart = [];
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+            renderCart();
+            
+            // Notify user
+            alert('Bill saved successfully!');
+            
+            // Switch to history view
+            sectionBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('.section-btn[data-section="history"]').classList.add('active');
+            shopSection.style.display = 'none';
+            historySection.style.display = 'block';
+            renderBillHistory();
+        }
+        
+        // Generate printable bill
+        function generatePrintableBill() {
+            // Calculate grand total
+            const grandTotal = cart.reduce((sum, item) => sum + item.total, 0);
+            
+            // Generate a printable bill
+            let billContent = `
+                <html>
+                <head>
+                    <title>Kabul Dry Fruits - Bill Receipt</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; }
+                        .bill-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #8B4513; padding-bottom: 10px; }
+                        .bill-title { font-size: 24px; font-weight: bold; color: #0066b3; }
+                        .shop-name { font-size: 28px; font-weight: bold; color: #ce1126; margin-bottom: 5px; }
+                        .bill-details { margin-bottom: 20px; }
+                        .bill-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                        .bill-table th { background: #f5deb3; text-align: left; }
+                        .bill-table th, .bill-table td { padding: 8px; border: 1px solid #ddd; }
+                        .bill-total { font-weight: bold; font-size: 18px; color: #0066b3; }
+                        .thank-you { text-align: center; margin-top: 20px; font-style: italic; color: #008000; }
+                        .footer { text-align: center; margin-top: 30px; font-size: 12px; color: #666; }
+                    </style>
+                </head>
+                <body>
+                    <div class="bill-header">
+                        <div class="shop-name">Kabul Dry Fruits</div>
+                        <div>Bill Receipt</div>
+                        <div>${new Date().toLocaleString()}</div>
+                    </div>
+                    
+                    <table class="bill-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Unit Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            cart.forEach(item => {
+                let quantityDisplay = item.unit === 'kg' ? 
+                    `${item.quantity.toFixed(3)} kg` : 
+                    `${item.quantity} pieces`;
+                
+                billContent += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>₹${item.unitPrice.toFixed(2)}</td>
+                        <td>${quantityDisplay}</td>
+                        <td>₹${item.total.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+            
+            billContent += `
+                        </tbody>
+                    </table>
+                    
+                    <div class="bill-details" style="text-align: right;">
+                        <div class="bill-total">Grand Total: ₹${grandTotal.toFixed(2)}</div>
+                    </div>
+                    
+                    <div class="thank-you">Thank you for your business!</div>
+                    <div class="footer">Kabul Dry Fruits | Premium Quality Dry Fruits</div>
+                </body>
+                </html>
+            `;
+            
+            // Open the bill in a new window for printing
+            const billWindow = window.open('', '_blank');
+            billWindow.document.write(billContent);
+            billWindow.document.close();
+            billWindow.focus();
+        }
+        
+        // Render bill history
+        function renderBillHistory(bills = billHistory) {
+            historyList.innerHTML = '';
+            
+            if (bills.length === 0) {
+                emptyHistory.style.display = 'block';
+                historyList.style.display = 'none';
+            } else {
+                emptyHistory.style.display = 'none';
+                historyList.style.display = 'table-row-group';
+                
+                bills.forEach(bill => {
+                    const date = new Date(bill.date);
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td>${bill.id}</td>
+                        <td>${date.toLocaleString()}</td>
+                        <td>${bill.items.length} items</td>
+                        <td>₹${bill.total.toFixed(2)}</td>
+                        <td class="history-actions">
+                            <button class="view-bill-btn" data-id="${bill.id}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="delete-bill-btn" data-id="${bill.id}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    
+                    historyList.appendChild(row);
+                });
+                
+                // Add event listeners to view buttons
+                document.querySelectorAll('.view-bill-btn').forEach(btn => {
+                    btn.addEventListener('click', () => viewBillDetails(parseInt(btn.dataset.id)));
+                });
+                
+                // Add event listeners to delete buttons
+                document.querySelectorAll('.delete-bill-btn').forEach(btn => {
+                    btn.addEventListener('click', () => deleteBill(parseInt(btn.dataset.id)));
+                });
+            }
+        }
+        
+        // View bill details
+        function viewBillDetails(billId) {
+            const bill = billHistory.find(b => b.id === billId);
+            
+            if (!bill) return;
+            
+            const date = new Date(bill.date);
+            
+            let billContent = `
+                <div class="bill-header">
+                    <div class="shop-name">Kabul Dry Fruits</div>
+                    <div>Bill Details</div>
+                    <div>${date.toLocaleString()}</div>
+                    <div>Bill ID: ${bill.id}</div>
+                </div>
+                
+                <table class="bill-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Unit Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            bill.items.forEach(item => {
+                let quantityDisplay = item.unit === 'kg' ? 
+                    `${item.quantity.toFixed(3)} kg` : 
+                    `${item.quantity} pieces`;
+                
+                billContent += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>₹${item.unitPrice.toFixed(2)}</td>
+                        <td>${quantityDisplay}</td>
+                        <td>₹${item.total.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+            
+            billContent += `
+                    </tbody>
+                </table>
+                
+                <div class="bill-details" style="text-align: right;">
+                    <div class="bill-total">Grand Total: ₹${bill.total.toFixed(2)}</div>
+                </div>
+            `;
+            
+            modalBillContent.innerHTML = billContent;
+            billModal.style.display = 'flex';
+        }
+        
+        // Delete a single bill
+        function deleteBill(billId) {
+            if (confirm('Are you sure you want to delete this bill? This action cannot be undone.')) {
+                billHistory = billHistory.filter(bill => bill.id !== billId);
+                localStorage.setItem('billHistory', JSON.stringify(billHistory));
+                renderBillHistory();
+            }
+        }
+        
+        // Clear all bill history
+        function clearAllHistory() {
+            if (billHistory.length === 0) {
+                alert('There are no bills to delete');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to delete ALL bill history? This action cannot be undone.')) {
+                billHistory = [];
+                localStorage.setItem('billHistory', JSON.stringify(billHistory));
+                renderBillHistory();
+            }
+        }
+        
+        // Filter bills
+        function filterBills(filterType) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            
+            let filteredBills = [];
+            
+            switch(filterType) {
+                case 'today':
+                    filteredBills = billHistory.filter(bill => {
+                        const billDate = new Date(bill.date);
+                        return billDate >= today;
+                    });
+                    break;
+                    
+                case 'month':
+                    filteredBills = billHistory.filter(bill => {
+                        const billDate = new Date(bill.date);
+                        return billDate >= startOfMonth;
+                    });
+                    break;
+                    
+                case 'custom':
+                    const start = new Date(startDate.value);
+                    const end = new Date(endDate.value);
+                    end.setHours(23, 59, 59, 999);
+                    
+                    if (!startDate.value || !endDate.value) {
+                        alert('Please select both start and end dates');
+                        return;
+                    }
+                    
+                    filteredBills = billHistory.filter(bill => {
+                        const billDate = new Date(bill.date);
+                        return billDate >= start && billDate <= end;
+                    });
+                    break;
+                    
+                default: // 'all'
+                    filteredBills = [...billHistory];
+                    break;
+            }
+            
+            renderBillHistory(filteredBills);
+        }
+
+        // Initialize the app when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
